@@ -1,0 +1,33 @@
+/* Gotham editorial spatial system */
+
+:root {
+  --editorial-max-width: 90rem;
+  --editorial-gutter-x: 1.5rem;
+  --editorial-grid-columns: 12;
+  /* ~60–70 characters — default reading measure */
+  --editorial-measure: 65ch;
+  /* Narrow editorial column — asymmetrical compositions */
+  --editorial-measure-narrow: 36ch;
+  /* Short metadata annotations (e.g. job title) */
+  --editorial-measure-meta: 32ch;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --editorial-gutter-x: 3.5rem;
+  }
+}
+
+@layer components {
+  .editorial-measure {
+    max-width: var(--editorial-measure);
+  }
+
+  .editorial-measure-narrow {
+    max-width: var(--editorial-measure-narrow);
+  }
+
+  .editorial-measure-meta {
+    max-width: var(--editorial-measure-meta);
+  }
+}
