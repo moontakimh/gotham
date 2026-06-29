@@ -1,23 +1,8 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Inter, Syne } from "next/font/google";
 import { ThemeProvider } from "@/components/shared/theme-provider";
+import { fontVariables } from "@/lib/fonts";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-
-const syne = Syne({
-  subsets: ["latin"],
-  variable: "--font-syne",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -33,12 +18,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn(
-        "h-full antialiased font-sans",
-        syne.variable,
-        inter.variable,
-        geistMono.variable,
-      )}
+      className={cn("h-full antialiased font-sans", fontVariables)}
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider
