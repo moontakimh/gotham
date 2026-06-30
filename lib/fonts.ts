@@ -1,22 +1,29 @@
-import { Geist_Mono, Inter, Syne } from "next/font/google";
+import localFont from "next/font/local";
 
-export const fontDisplay = Syne({
-  subsets: ["latin"],
+/**
+ * ADR-001: Uncut Sans (local) + Commit Mono (@fontsource/commit-mono).
+ */
+
+const uncutSansDisplay = localFont({
+  src: "../assets/fonts/UncutSans-Variable.woff2",
   variable: "--font-family-display",
+  display: "swap",
+  weight: "100 900",
 });
 
-export const fontBody = Inter({
-  subsets: ["latin"],
+const uncutSansBody = localFont({
+  src: "../assets/fonts/UncutSans-Variable.woff2",
   variable: "--font-family-body",
+  display: "swap",
+  weight: "100 900",
 });
 
-export const fontMetadata = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-family-metadata",
-});
+export const fontDisplay = uncutSansDisplay;
+export const fontBody = uncutSansBody;
 
-export const fontVariables = [
-  fontDisplay.variable,
-  fontBody.variable,
-  fontMetadata.variable,
-].join(" ");
+/** Commit Mono loads via @fontsource in globals.css → --font-family-metadata */
+export const fontMetadata = { variable: "" };
+
+export const fontVariables = [fontDisplay.variable, fontBody.variable].join(" ");
+
+export const fontsSource = "licensed" as const;

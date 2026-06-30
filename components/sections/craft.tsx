@@ -7,7 +7,7 @@ import {
 import { craftContent } from "@/components/sections/craft/content";
 
 export function Craft() {
-  const { label, title, sequence, body } = craftContent;
+  const { label, title, steps } = craftContent;
 
   return (
     <EditorialSection id="craft" aria-label="Craft" spacing="chapter">
@@ -23,40 +23,38 @@ export function Craft() {
 
           <EditorialCol
             as="h2"
-            span="display"
-            className="mt-[clamp(2.5rem,6vh,4rem)] font-display text-[clamp(2.5rem,7vw,4.25rem)] font-bold leading-[0.92] tracking-tighter text-text-primary md:col-start-3 lg:col-start-4"
+            span="display-tight"
+            className="mt-[clamp(2rem,5vh,3rem)] font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold leading-[0.92] tracking-tighter text-text-primary"
           >
             {title}
           </EditorialCol>
         </EditorialGrid>
 
-        <EditorialGrid className="mt-[clamp(5rem,12vh,9rem)] md:items-end md:gap-y-0">
-          <ol className="col-span-12 list-none md:col-span-5 md:col-start-1 lg:col-span-5">
-            {sequence.map((step, index) => (
-              <li key={step}>
-                {index > 0 ? (
-                  <p
-                    aria-hidden
-                    className="py-[clamp(0.875rem,2.5vh,1.5rem)] font-metadata text-[10px] text-text-secondary md:text-[11px]"
-                  >
-                    ↓
-                  </p>
-                ) : null}
-                <p className="font-display text-[clamp(2rem,5vw,3.25rem)] font-bold leading-none tracking-tighter text-text-primary">
-                  {step}
+        <ol className="mt-[clamp(3rem,8vh,5rem)] space-y-0">
+          {steps.map((step, index) => (
+            <li
+              key={step.number}
+              className="border-t border-border-subtle py-[clamp(1.5rem,4vh,2.5rem)]"
+            >
+              <EditorialGrid className="md:items-start">
+                <p className="col-span-12 font-metadata text-[10px] uppercase tracking-[0.28em] text-text-secondary md:col-span-2 md:col-start-1 md:text-[11px]">
+                  {step.number}
                 </p>
-              </li>
-            ))}
-          </ol>
-
-          <EditorialCol
-            as="p"
-            span="body-offset"
-            className="mt-[clamp(3rem,8vh,5rem)] font-body text-base leading-[1.7] text-text-primary max-md:ml-[clamp(1.5rem,6vw,3rem)] md:mt-0 md:pb-[clamp(0.25rem,1vh,0.5rem)] md:text-lg"
-          >
-            {body}
-          </EditorialCol>
-        </EditorialGrid>
+                <div className="col-span-12 mt-[clamp(0.75rem,2vh,1rem)] md:col-span-4 md:col-start-3 md:mt-0">
+                  <h3 className="font-display text-[clamp(1.5rem,3.5vw,2.25rem)] font-semibold leading-tight tracking-tighter text-text-primary">
+                    {step.title}
+                  </h3>
+                </div>
+                <p className="col-span-12 mt-[clamp(0.75rem,2vh,1rem)] font-body text-base leading-[1.65] text-text-secondary md:col-span-5 md:col-start-7 md:mt-0 md:text-lg">
+                  {step.description}
+                </p>
+              </EditorialGrid>
+              {index === steps.length - 1 ? (
+                <div className="mt-[clamp(1.5rem,4vh,2.5rem)] border-t border-border-subtle" />
+              ) : null}
+            </li>
+          ))}
+        </ol>
       </EditorialContainer>
     </EditorialSection>
   );

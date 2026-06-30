@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
 
 import {
   EditorialCol,
@@ -9,15 +9,12 @@ import {
   EditorialSection,
 } from "@/components/layout";
 import { galleryContent } from "@/components/sections/gallery/content";
-import { Lightbox } from "@/components/sections/gallery/lightbox";
-import { ModeToggle } from "@/components/sections/gallery/mode-toggle";
-import { PhotoGrid } from "@/components/sections/gallery/photo-grid";
-import { PlaylistList } from "@/components/sections/gallery/playlist-list";
+
+const teaserPhotos = galleryContent.photos.slice(0, 3);
+const featuredPlaylist = galleryContent.playlists[0];
 
 export function Gallery() {
-  const { label, title, photos, playlists } = galleryContent;
-  const [mode, setMode] = useState<"photography" | "playlists">("photography");
-  const [activePhotoId, setActivePhotoId] = useState<string | null>(null);
+  const { label, title } = galleryContent;
 
   return (
     <EditorialSection id="gallery" aria-label="Personal" spacing="chapter">
@@ -33,30 +30,46 @@ export function Gallery() {
 
           <EditorialCol
             as="h2"
-            span="display"
-            className="mt-[clamp(2.5rem,6vh,4rem)] font-display text-[clamp(2.25rem,6.5vw,4rem)] font-bold leading-[0.92] tracking-tighter text-text-primary md:col-span-8 md:col-start-3 lg:col-start-4"
+            span="display-tight"
+            className="mt-[clamp(2rem,5vh,3rem)] font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold leading-[0.92] tracking-tighter text-text-primary"
           >
             {title}
           </EditorialCol>
         </EditorialGrid>
 
-        <div className="mt-[clamp(2.5rem,6vh,4rem)] max-md:ml-[clamp(1.5rem,6vw,3rem)] md:col-span-12 md:col-start-3 lg:col-start-4">
-          <ModeToggle mode={mode} onModeChange={setMode} />
-        </div>
+        <EditorialGrid className="mt-[clamp(3rem,8vh,5rem)]">
+          {teaserPhotos.map((photo) => (
+            <div
+              key={photo.id}
+              className="col-span-4 aspect-square border border-border-subtle bg-surface transition-transform duration-180 hover:scale-[1.02] motion-reduce:transition-none motion-reduce:hover:scale-100 sm:col-span-4 lg:col-span-3 lg:col-start-3"
+              aria-hidden
+            />
+          ))}
+        </EditorialGrid>
 
-        <div
-          key={mode}
-          className="mt-[clamp(3rem,8vh,5rem)] animate-in fade-in duration-300 max-md:ml-[clamp(1.5rem,6vw,3rem)]"
-        >
-          {mode === "photography" ? (
-            <PhotoGrid photos={photos} onPhotoSelect={setActivePhotoId} />
-          ) : (
-            <PlaylistList playlists={playlists} />
-          )}
-        </div>
+        <EditorialGrid className="mt-[clamp(2.5rem,6vh,4rem)]">
+          <div className="col-span-12 lg:col-span-6 lg:col-start-3">
+            <p className="font-metadata text-[10px] uppercase tracking-[0.25em] text-text-secondary md:text-xs">
+              Currently listening
+            </p>
+            <p className="mt-[clamp(0.75rem,2vh,1.25rem)] font-display text-[clamp(1.25rem,3vw,1.75rem)] font-semibold leading-tight tracking-tighter text-text-primary">
+              {featuredPlaylist.title}
+            </p>
+            <p className="mt-1 font-metadata text-[10px] uppercase tracking-[0.2em] text-text-secondary md:text-[11px]">
+              {featuredPlaylist.mood} · {featuredPlaylist.year}
+            </p>
+          </div>
+
+          <div className="col-span-12 mt-[clamp(1.5rem,3vh,2rem)] lg:col-span-4 lg:col-start-3 lg:mt-[clamp(2.5rem,6vh,4rem)]">
+            <Link
+              href="/now"
+              className="inline-flex min-h-11 items-center font-body text-sm text-text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:text-base"
+            >
+              View all →
+            </Link>
+          </div>
+        </EditorialGrid>
       </EditorialContainer>
-
-      <Lightbox photoId={activePhotoId} onClose={() => setActivePhotoId(null)} />
     </EditorialSection>
   );
 }

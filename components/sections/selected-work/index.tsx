@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { selectedWorkContent } from "@/components/sections/selected-work/content";
 import { SelectedWorkDesktop } from "@/components/sections/selected-work/selected-work-desktop";
 import { SelectedWorkMobile } from "@/components/sections/selected-work/selected-work-mobile";
+import { WorkIntroHeader } from "@/components/sections/selected-work/work-intro";
 
 type LayoutMode = "stack" | "pin";
 
@@ -33,12 +34,17 @@ function useLayoutMode(): LayoutMode {
 }
 
 export function SelectedWork() {
-  const { label, projects } = selectedWorkContent;
+  const { label, intro, projects } = selectedWorkContent;
   const mode = useLayoutMode();
 
-  if (mode === "pin") {
-    return <SelectedWorkDesktop projects={projects} />;
-  }
-
-  return <SelectedWorkMobile label={label} projects={projects} />;
+  return (
+    <>
+      <WorkIntroHeader label={label} intro={intro} />
+      {mode === "pin" ? (
+        <SelectedWorkDesktop projects={projects} label={label} />
+      ) : (
+        <SelectedWorkMobile projects={projects} />
+      )}
+    </>
+  );
 }

@@ -1,15 +1,19 @@
-/* Gotham semantic color tokens */
+/* Gotham semantic color tokens — ADR-005 accent hex pending Figma confirmation */
 
 :root {
-  --canvas: oklch(0.97 0.012 88);
+  --bg: #f8f7f4;
+  --text: #111111;
+  --canvas: var(--bg);
   --surface: oklch(0.945 0.014 88);
-  --text-primary: oklch(0.21 0.02 258);
+  --text-primary: var(--text);
   --text-secondary: oklch(0.48 0.02 258);
   --border-subtle: oklch(0.88 0.015 88);
-  --accent: oklch(0.36 0.07 158);
-  --forest-ink: oklch(0.36 0.07 158);
-  --focus: oklch(0.36 0.07 158);
-  --selection: oklch(0.9 0.03 158);
+  /* ADR-005: neutral interim until Figma locks accent hex */
+  --accent-signal: var(--text-secondary);
+  --accent-uv: var(--text-secondary);
+  --accent: var(--text-primary);
+  --focus: var(--text-primary);
+  --selection: oklch(0.92 0.01 88);
 
   /* shadcn compatibility aliases */
   --background: var(--canvas);
@@ -45,14 +49,17 @@
 }
 
 .dark {
-  --canvas: oklch(0.145 0 0);
+  --bg: #090909;
+  --text: #f6f6f6;
+  --canvas: var(--bg);
   --surface: oklch(0.205 0 0);
-  --text-primary: oklch(0.985 0 0);
+  --text-primary: var(--text);
   --text-secondary: oklch(0.708 0 0);
   --border-subtle: oklch(1 0 0 / 10%);
-  --accent: oklch(0.922 0 0);
-  --forest-ink: oklch(0.68 0.06 158);
-  --focus: oklch(0.556 0 0);
+  --accent-signal: var(--text-secondary);
+  --accent-uv: var(--text-secondary);
+  --accent: var(--text-primary);
+  --focus: var(--text-primary);
   --selection: oklch(0.269 0 0);
 
   /* shadcn compatibility aliases */

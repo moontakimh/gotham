@@ -1,91 +1,107 @@
 import {
-  EditorialCol,
-  EditorialContainer,
-  EditorialGrid,
-} from "@/components/layout";
+  workSpreadVariants,
+  type WorkSpreadVariant,
+} from "@/lib/layout";
 import type { SelectedWorkProject } from "@/components/sections/selected-work/content";
 import { cn } from "@/lib/utils";
 
 type ProjectSpreadProps = {
   project: SelectedWorkProject;
   layout: "panel" | "stacked";
+  variant?: WorkSpreadVariant;
+  isActive?: boolean;
 };
 
-export function ProjectSpread({ project, layout }: ProjectSpreadProps) {
-  const { number, title, category, description, slug } = project;
+export function ProjectSpread({
+  project,
+  layout,
+  variant = 0,
+  isActive = true,
+}: ProjectSpreadProps) {
+  const { number, title, category, description, slug, status } = project;
   const isPanel = layout === "panel";
+  const spread = workSpreadVariants[variant];
 
   return (
     <article
       aria-label={title}
       className={cn(
-        "bg-canvas",
+        "bg-canvas transition-[opacity,transform] duration-320 motion-reduce:transition-none",
+        isPanel && spread.width,
+        isPanel && !isActive && "opacity-[0.45] scale-[0.985]",
+        isPanel && isActive && "opacity-100 scale-100",
         isPanel
-          ? "flex h-dvh w-screen shrink-0 flex-col"
-          : "pb-[clamp(6rem,14vh,10rem)] last:pb-0",
+          ? cn("flex h-dvh flex-col", spread.panel)
+          : "w-full pb-[clamp(6rem,14vh,10rem)] last:pb-0",
       )}
     >
-      <EditorialContainer
+      <div
         className={cn(
-          "flex flex-col",
+          "mx-auto flex h-full w-full max-w-[var(--editorial-max-width)] flex-col px-[var(--editorial-gutter-x)]",
           isPanel
-            ? "h-full pt-[clamp(2rem,5vh,3.5rem)] pb-[clamp(1.5rem,4vh,2.5rem)]"
+            ? "pt-[clamp(3.5rem,8vh,5rem)] pb-[clamp(1.5rem,4vh,2.5rem)]"
             : "pt-[clamp(3rem,8vh,5rem)]",
         )}
       >
-        <EditorialGrid className={isPanel ? "shrink-0" : undefined}>
-          <EditorialCol
-            as="p"
-            span="metadata-label"
-            className="font-metadata text-[10px] uppercase tracking-[0.25em] text-text-secondary md:text-xs"
+        <div
+          className={cn(
+            "grid w-full grid-cols-12 gap-x-[var(--editorial-column-gap)]",
+            isPanel ? "shrink-0 md:grid-flow-dense" : undefined,
+          )}
+        >
+          <p
+            className={cn(
+              spread.meta,
+              "font-metadata text-[10px] uppercase tracking-[0.25em] text-text-secondary md:text-xs",
+            )}
           >
             {number}
-          </EditorialCol>
+          </p>
 
-          <EditorialCol
-            as="h2"
-            span="display"
-            className="mt-[clamp(1.25rem,3vh,2rem)] font-display text-[clamp(2.25rem,6vw,4.5rem)] font-bold leading-[0.92] tracking-tighter text-text-primary"
+          <h2
+            className={cn(
+              spread.title,
+              "mt-[clamp(1rem,2.5vh,1.75rem)] text-text-primary md:mt-0",
+            )}
           >
             {title}
-          </EditorialCol>
+            <span className="mt-[clamp(0.75rem,2vh,1.25rem)] block font-metadata text-[10px] uppercase tracking-[0.28em] text-text-secondary md:text-[11px]">
+              {category}
+            </span>
+          </h2>
 
-          <EditorialCol
-            as="p"
-            span="metadata-label"
-            className="mt-[clamp(1.5rem,4vh,2.5rem)] font-metadata text-[10px] uppercase tracking-[0.28em] text-text-secondary md:text-[11px]"
-          >
-            {category}
-          </EditorialCol>
-
-          <EditorialCol
-            as="p"
-            span="body"
-            className="mt-[clamp(1rem,2.5vh,1.5rem)] font-body text-base leading-[1.65] text-text-primary md:text-lg"
+          <p
+            className={cn(
+              spread.body,
+              "mt-[clamp(1rem,2.5vh,1.5rem)] font-body text-base leading-[1.65] text-text-primary md:text-lg",
+            )}
           >
             {description}
-          </EditorialCol>
+          </p>
 
-          <EditorialCol
-            as="a"
-            span="body"
+          <a
             href={`/work/${slug}`}
-            className="mt-[clamp(1.25rem,3vh,2rem)] font-body text-sm text-text-primary underline-offset-4 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+            className={cn(
+              spread.body,
+              "mt-[clamp(1.25rem,3vh,2rem)] inline-flex min-h-11 items-center font-body text-sm text-text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+              isActive && "text-accent-signal",
+            )}
           >
-            View Case Study →
-          </EditorialCol>
-        </EditorialGrid>
+            {status === "locked" ? "Request access →" : "View case study →"}
+          </a>
+        </div>
 
         <div
           className={cn(
-            "w-full border border-border-subtle bg-surface",
+            spread.image,
             isPanel
               ? "mt-[clamp(1.5rem,4vh,2.5rem)] min-h-0 flex-1"
-              : "mt-[clamp(2rem,6vh,3.5rem)] aspect-[4/3]",
+              : "mt-[clamp(2rem,6vh,3.5rem)]",
+            isActive && isPanel && "border-text-primary/20",
           )}
           aria-hidden
         />
-      </EditorialContainer>
+      </div>
     </article>
   );
 }

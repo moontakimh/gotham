@@ -7,7 +7,7 @@ import {
 import { practiceContent } from "@/components/sections/practice/content";
 
 export function Practice() {
-  const { label, body } = practiceContent;
+  const { label, lead, domains, body, note } = practiceContent;
 
   return (
     <EditorialSection id="practice" aria-label="Practice" spacing="chapter">
@@ -23,10 +23,38 @@ export function Practice() {
 
           <EditorialCol
             as="p"
+            span="body-wide"
+            className="mt-[clamp(2rem,5vh,3rem)] font-display text-[clamp(1.75rem,4vw,2.75rem)] font-semibold leading-[1.15] tracking-tighter text-text-primary"
+          >
+            {lead}
+          </EditorialCol>
+        </EditorialGrid>
+
+        <EditorialGrid className="mt-[clamp(1.5rem,4vh,2.5rem)]">
+          <EditorialCol
+            as="p"
+            span="body"
+            className="font-metadata text-[10px] uppercase tracking-[0.28em] text-text-secondary md:text-[11px]"
+          >
+            {domains.join(" · ")}
+          </EditorialCol>
+        </EditorialGrid>
+
+        <EditorialGrid className="mt-[clamp(2.5rem,6vh,4rem)]">
+          <EditorialCol
+            as="p"
             span="body-offset"
-            className="mt-[clamp(4rem,10vh,6rem)] font-body text-base leading-[1.7] text-text-primary max-md:ml-[clamp(1.5rem,6vw,3rem)] md:mt-[clamp(5.5rem,13vh,8rem)] md:text-lg"
+            className="font-body text-base leading-[1.7] text-text-primary md:text-lg"
           >
             {body}
+          </EditorialCol>
+
+          <EditorialCol
+            as="p"
+            span="metadata"
+            className="mt-[clamp(2rem,5vh,3rem)] font-metadata text-[10px] leading-relaxed uppercase tracking-[0.22em] text-text-secondary md:mt-[clamp(3rem,8vh,5rem)] md:text-[11px]"
+          >
+            {note}
           </EditorialCol>
         </EditorialGrid>
       </EditorialContainer>

@@ -50,11 +50,14 @@ export function EditorialContainer({
 
 type EditorialGridProps = ComponentPropsWithoutRef<"div">;
 
-/** 12-column editorial grid — primary layout primitive. */
+/** 12-column editorial grid with responsive gutters. */
 export function EditorialGrid({ className, ...props }: EditorialGridProps) {
   return (
     <div
-      className={cn("grid w-full grid-cols-12", className)}
+      className={cn(
+        "grid w-full grid-cols-12 gap-x-[var(--editorial-column-gap)]",
+        className,
+      )}
       {...props}
     />
   );

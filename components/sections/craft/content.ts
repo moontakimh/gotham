@@ -1,13 +1,24 @@
 export const craftContent = {
   label: "CRAFT",
   title: "How I work",
-  sequence: [
-    "Research",
-    "Strategy",
-    "Systems",
-    "Services",
-    "Products",
-    "Delivery",
+  steps: [
+    {
+      number: "01",
+      title: "Discover",
+      description:
+        "Understand people, constraints, and business context before touching pixels.",
+    },
+    {
+      number: "02",
+      title: "Define",
+      description:
+        "Turn research into strategy — journeys, systems, and measurable outcomes.",
+    },
+    {
+      number: "03",
+      title: "Deliver",
+      description:
+        "Ship coherent products and services with teams, not handoff documents.",
+    },
   ],
-  body: "I work across the full lifecycle of digital products, connecting research, strategy, service design, systems thinking, and product execution into one continuous practice.",
 } as const;
