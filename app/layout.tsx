@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/shared/theme-provider";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { fontVariables } from "@/lib/fonts";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -26,7 +27,9 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
+          storageKey="gotham-theme"
         >
+          <ThemeToggle />
           {children}
         </ThemeProvider>
       </body>
